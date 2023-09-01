@@ -7,6 +7,7 @@ import {
     CardHeader,
     CardTitle,
 } from "@/components/ui/card"
+import prisma from '@/prisma'
 
 const cards = [{
     title: "Exercises",
