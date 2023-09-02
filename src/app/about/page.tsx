@@ -21,7 +21,7 @@ export default function Home() {
             <h1 className='text-center text-6xl font-bold'>Learn languages through interactive exercises and activities</h1>
             <h2 className='mt-5 text-lg'>Improve language proficiency, for beginners and even experienced</h2>
             <div className='mt-10 flex gap-5 flex-wrap'>
-                {cards.map((card) => <Card className='max-w-[300px]'>
+                {cards.map((card, cardIdx) => <Card key={cardIdx} className='max-w-[300px]'>
                     <CardHeader>
                         <CardTitle>{card.title}</CardTitle>
                         <CardDescription>{card.body}</CardDescription>

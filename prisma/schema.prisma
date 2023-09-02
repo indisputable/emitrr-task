@@ -15,12 +15,15 @@ model User {
     email String @unique
     name  String
 
-    results Result[]
-    quizes  Quiz[]
+    languages Language[]
+    results   Result[]
+    quizes    Quiz[]
 }
 
 model Result {
     id Int @id @default(autoincrement())
+
+    score Int
 
     user   User @relation(fields: [userId], references: [id])
     userId Int
@@ -29,15 +32,26 @@ model Result {
     quizId Int
 }
 
+model Language {
+    id Int @id @default(autoincrement())
+
+    name   String
+    quizes Quiz[]
+    users  User[]
+}
+
 model Quiz {
     id Int @id @default(autoincrement())
 
-    name      String
+    name        String
     description String
-    questions Question[]
+    questions   Question[]
 
     users   User[]
     results Result[]
+
+    language   Language @relation(fields: [languageId], references: [id])
+    languageId Int
 }
 
 model Question {
@@ -53,6 +67,8 @@ model Question {
 model Option {
     id   Int    @id @default(autoincrement())
     text String
+
+    correct Boolean
 
     question   Question @relation(fields: [questionId], references: [id])
     questionId Int
