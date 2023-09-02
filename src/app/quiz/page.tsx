@@ -11,7 +11,15 @@ import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 
 export default async function QuizesPage() {
-    const quizes = await prisma.quiz.findMany();
+    const quizes = await prisma.quiz.findMany({
+        include: {
+            results: {
+                where: {
+                    userId: 1
+                }
+            }
+        }
+    });
 
     return (
         <main className="flex flex-col items-center justify-between px-24">
@@ -27,7 +35,7 @@ export default async function QuizesPage() {
                     </CardContent>
                     <CardFooter className='flex gap-x-4'>
                         <Button>
-                            <Link href={`/quiz/${quiz.id}`}>Start Quiz</Link>
+                            <Link href={`/quiz/${quiz.id}`}>{quiz.results.length === 0 ? "Start Quiz" : "View Result"}</Link>
                         </Button>
                         <Link href={`leaderboard/quiz/${quiz.id}`} className='text-sm underline'>View leaderboard</Link>
                     </CardFooter>

@@ -1,17 +1,25 @@
-import prisma from '@/lib/prisma'
 import { redirect } from 'next/navigation'
 import QuizForm from "./form";
-import { getQuizWithQuestions } from '@/lib/quiz';
+import { getQuizWithQuestions, getScore } from '@/lib/quiz';
+import { Card, CardDescription, CardTitle } from '@/components/ui/card';
 
-export default async function QuizesPage({ params }: { params: { quizId: string } }) {
-    const quiz = await getQuizWithQuestions(parseInt(params.quizId)) 
-
+export default async function QuizPage({ params }: { params: { quizId: string } }) {
+    const quiz = await getQuizWithQuestions({ quizId: parseInt(params.quizId), userId: 1 });
+    const result = quiz?.results?.length! > 0 ?? false;
     if (!quiz) return redirect('/quiz')
+
+    const [score, total] = await getScore(quiz.id, 1);
 
     return (
         <main className="flex flex-col items-center justify-between px-24">
-            <h1 className='mt-3 text-center text-4xl font-bold'>Take Quiz: {quiz?.name}</h1>
+            <h1 className='mt-3 text-center text-4xl font-bold'>{result ? "View Result" : "Take Quiz"}: {quiz?.name}</h1>
             <h2 className='mt-5 text-lg'>{quiz.description}</h2>
+            {result && <><Card className='w-1/2 mt-6 flex flex-col items-center p-5'>
+                <CardTitle>Congratulations!</CardTitle>
+                <CardDescription className='mt-1'>You scored  {score} out of {total}!</CardDescription>
+            </Card>
+                <h3 className='mt-8'>Your submission details!</h3>
+            </>}
             <QuizForm quiz={quiz} />
         </main>
     )
