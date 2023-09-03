@@ -1,6 +1,6 @@
 "use client"
 import Link from "next/link";
-import { signOut, useSession } from 'next-auth/react'
+import { signIn, signOut, useSession } from 'next-auth/react'
 
 const Nav = () => {
     const { data: session, status } = useSession();
@@ -10,7 +10,7 @@ const Nav = () => {
             <Link href='/about'>About</Link>
             <Link href='/about'>Leaderboard</Link>
             <Link href='/quiz'>Explore quizes</Link>
-            {!session?.user && <Link href='/about'>Sign in</Link>}
+            {!session?.user && <button onClick={()=>{signIn()}}>Sign in</button>}
             {session?.user && <button onClick={() => { signOut() }}>Logout</button>}
         </div>
     </nav>

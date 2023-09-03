@@ -1,14 +1,21 @@
 import { redirect } from 'next/navigation'
 import QuizForm from "./form";
-import { getQuizWithQuestions, getScore } from '@/lib/quiz';
+import { getQuiz, getScore } from '@/lib/quiz';
 import { Card, CardDescription, CardTitle } from '@/components/ui/card';
 
 export default async function QuizPage({ params }: { params: { quizId: string } }) {
-    const quiz = await getQuizWithQuestions({ quizId: parseInt(params.quizId), userId: 1 });
-    const result = quiz?.results?.length! > 0 ?? false;
+    const quiz = await getQuiz({ quizId: parseInt(params.quizId), userId: 1 });
+    const result = quiz?.result?.markedOptions?.length! > 0 ? quiz.result : false;
     if (!quiz) return redirect('/quiz')
-
-    const [score, total] = await getScore(quiz.id, 1);
+    if (!result) {
+        quiz.result!.questions = quiz.result!.questions.map(q => {
+            return {
+                ...q, options: q.options.map(op => ({
+                    ...op, correct: false
+                }))
+            }
+        })
+    }
 
     return (
         <main className="flex flex-col items-center justify-between px-24">
@@ -16,7 +23,7 @@ export default async function QuizPage({ params }: { params: { quizId: string } 
             <h2 className='mt-5 text-lg'>{quiz.description}</h2>
             {result && <><Card className='w-1/2 mt-6 flex flex-col items-center p-5'>
                 <CardTitle>Congratulations!</CardTitle>
-                <CardDescription className='mt-1'>You scored  {score} out of {total}!</CardDescription>
+                <CardDescription className='mt-1'>You scored  {result.score} out of {result.totalScore}!</CardDescription>
             </Card>
                 <h3 className='mt-8'>Your submission details!</h3>
             </>}

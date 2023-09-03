@@ -1,3 +1,5 @@
+import { matchPassword } from "@/lib/auth"
+import prisma from "@/lib/prisma"
 import NextAuth, { AuthOptions } from "next-auth"
 import { JWT } from "next-auth/jwt"
 import CredentialsProvider from "next-auth/providers/credentials"
@@ -12,7 +14,7 @@ export const authOptions: AuthOptions = {
             // e.g. domain, username, password, 2FA token, etc.
             // You can pass any HTML attribute to the <input> tag through the object.
             credentials: {
-                username: { label: "Username", type: "text", placeholder: "jsmith" },
+                email: { label: "Email", type: "email", placeholder: "jsmith@gmail.com" },
                 password: { label: "Password", type: "password" }
             },
             async authorize(credentials, req) {
@@ -22,20 +24,19 @@ export const authOptions: AuthOptions = {
                 // e.g. return { id: 1, name: 'J Smith', email: 'jsmith@example.com' }
                 // You can also use the `req` object to obtain additional parameters
                 // (i.e., the request IP address)
+                if (!credentials || !credentials.email || !credentials.password) return null;
 
-                return {
-                    name: "Tanmay Kachroo",
-                    age: 20
-                }
-                const res = await fetch("/your/endpoint", {
-                    method: 'POST',
-                    body: JSON.stringify(credentials),
-                    headers: { "Content-Type": "application/json" }
+                const user = await prisma.user.findUnique({
+                    where: {
+                        email: credentials.email
+                    }
                 })
-                const user = await res.json()
+
+                if (!user) return null
+
 
                 // If no error and we have user data, return it
-                if (res.ok && user) {
+                if (matchPassword(credentials.password, user.hash)) {
                     return user
                 }
                 // Return null if user data could not be retrieved

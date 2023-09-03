@@ -1,17 +1,61 @@
-import { Prisma } from "@prisma/client";
+import { Prisma, Question } from "@prisma/client";
 import prisma from "./prisma";
 
 
-type getQuizWithQuestionsParams = {
+type getQuizParams = {
     quizId: number
     userId: number
 }
 
-export const getQuizWithQuestions = (params: getQuizWithQuestionsParams) => {
-    return prisma.quiz.findUnique({
+export const getQuiz = async (params: getQuizParams) => {
+    const user = await prisma.user.findUnique({
+        where: { id: params.userId }
+    })
+
+    const quiz = await prisma.quiz.findUnique({
         where:
         {
             id: params.quizId
+        },
+        include: {
+            results: {
+                where: {
+                    userId: params.userId
+                },
+                include: {
+                    markedOptions: true,
+                    questions: {
+                        include: {
+                            options: true
+                        }
+                    }
+                }
+            }
+        }
+    });
+
+    if (quiz?.results.length! > 0) {
+        return { ...quiz, result: quiz?.results[0] };
+    }
+
+    const questions: Question[] = await prisma.$queryRawUnsafe(`SELECT * FROM "Question" WHERE languageId = ${quiz?.languageId} AND difficulty > ${user.level} ORDER BY RANDOM() LIMIT 5`)
+    /**
+    const questions = await prisma.question.findMany({
+        where: {
+            languageId: quiz?.languageId
+        },
+        take: 5
+    })
+    **/
+    const totalScore = questions.reduce((p, c) => p + c.difficulty * 10, 0)
+    const result = await prisma.result.create({
+        data: {
+            userId: params.userId,
+            quizId: params.quizId,
+            totalScore,
+            questions: {
+                connect: questions.map(q => ({ id: q.id }))
+            }
         },
         include: {
             questions: {
@@ -19,19 +63,14 @@ export const getQuizWithQuestions = (params: getQuizWithQuestionsParams) => {
                     options: true
                 }
             },
-            results: {
-                where: {
-                    userId: params.userId
-                },
-                include: {
-                    markedOptions: true
-                }
-            }
+            markedOptions: true
         }
-    });
+    })
+
+    return { ...quiz, result }
 }
 
-export type QuizWithQuestions = Prisma.PromiseReturnType<typeof getQuizWithQuestions>;
+export type Quiz = Prisma.PromiseReturnType<typeof getQuiz>;
 
 export const getScore = async (quizId: number, userId: number) => {
     const quiz = await prisma.quiz.findUnique({
