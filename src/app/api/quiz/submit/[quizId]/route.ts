@@ -1,4 +1,5 @@
 import prisma from "@/lib/prisma";
+import { getScore } from "@/lib/quiz";
 import { NextRequest, NextResponse } from "next/server"
 
 export async function GET(request: NextRequest, context: any) {
@@ -41,7 +42,7 @@ export async function POST(request: NextRequest, context: any) {
             }
         }
     })
-    const score = result?.markedOptions.reduce((p, c) => p + (c.correct ? c.question.difficulty * 10 : 0), 0)
+    const score = result?.markedOptions.reduce((p, c) => p + (c.correct ? getScore(c.question.difficulty) : 0), 0)
     await prisma.result.update({
         where: { id: result!.id }, data: {
             score: score

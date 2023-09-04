@@ -8,9 +8,9 @@ const Nav = () => {
         <Link href="/" className="font-bold text-xl">LangLearn</Link>
         <div className="flex gap-x-8 text-sm font-semibold">
             <Link href='/about'>About</Link>
-            <Link href='/about'>Leaderboard</Link>
+            <Link href='/leaderboard/language/all'>Leaderboard</Link>
             <Link href='/quiz'>Explore quizes</Link>
-            {!session?.user && <button onClick={()=>{signIn()}}>Sign in</button>}
+            {!session?.user && <button onClick={() => { signIn() }}>Sign in</button>}
             {session?.user && <button onClick={() => { signOut() }}>Logout</button>}
         </div>
     </nav>

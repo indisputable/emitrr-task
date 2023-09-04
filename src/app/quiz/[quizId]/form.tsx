@@ -13,7 +13,7 @@ import { useForm } from "react-hook-form"
 import * as z from "zod"
 import { Label } from "@/components/ui/label"
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
-import { Quiz } from "@/lib/quiz";
+import { Quiz, getScore } from "@/lib/quiz";
 import {
     Form,
     FormControl,
@@ -53,7 +53,7 @@ export default function QuizForm({ quiz }: { quiz: Quiz }) {
                         name={question.id.toString()}
                         render={({ field }) => (
                             <FormItem className="space-y-3 border p-6 rounded">
-                                <FormLabel className="flex justify-between"><span>{questionIndex + 1}. {question.text}</span> <span className="text-sm text-zinc-500">{question.difficulty * 10} points</span></FormLabel>
+                                <FormLabel className="flex justify-between"><span>{questionIndex + 1}. {question.text}</span> <span className="text-sm text-zinc-500">{getScore(question.difficulty)} points</span></FormLabel>
                                 <FormControl>
                                     <RadioGroup disabled={quiz.result?.score! > 0}
                                         onValueChange={field.onChange}
@@ -77,7 +77,7 @@ export default function QuizForm({ quiz }: { quiz: Quiz }) {
                         )}
                     />
                 })}
-                <Button className="w-1/2 mx-auto" type="submit" disabled={quiz?.results?.length! > 0}>Submit</Button>
+               {quiz.result?.markedOptions.length === 0 &&  <Button className="w-1/2 mx-auto" type="submit">Submit</Button>}
             </form>
         </Form>
     </div>

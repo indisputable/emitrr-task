@@ -22,17 +22,18 @@ import { useState } from "react";
 export default function Dashboard({ languages, quizes }: { languages: any, quizes: any }) {
     const [languageId, setLanguageId] = useState<number>(-1)
     return <div className="mt-8">
-        <div className="flex gap-x-4 items-center"><span>Add Language filter</span><Select onValueChange={(v) => setLanguageId(parseInt(v))}>
-            <SelectTrigger className="w-[180px]">
-                <SelectValue placeholder="Language" />
-            </SelectTrigger>
-            <SelectContent><SelectItem value={"-1"}>All</SelectItem>
-                {languages.map(lang => {
-                    return <SelectItem value={lang.id.toString()}>{lang.name}</SelectItem>
-                })}
+        <div className="flex gap-x-4 items-center"><span>Add Language filter</span>
+            <Select onValueChange={(v) => setLanguageId(parseInt(v))}>
+                <SelectTrigger className="w-[180px]">
+                    <SelectValue placeholder="Language" />
+                </SelectTrigger>
+                <SelectContent><SelectItem value={"-1"}>All</SelectItem>
+                    {languages.map(lang => {
+                        return <SelectItem value={lang.id.toString()}>{lang.name}</SelectItem>
+                    })}
 
-            </SelectContent>
-        </Select>
+                </SelectContent>
+            </Select>
         </div>
         <div className='mt-6 flex gap-5 flex-wrap'>
             {quizes.filter(q => languageId === -1 || q.language.id === languageId).map((quiz) => <Card key={quiz.id} className='min-w-[350px]'>
