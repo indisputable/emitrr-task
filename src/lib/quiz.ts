@@ -49,7 +49,7 @@ export const getQuiz = async (params: getQuizParams) => {
     const shuffledQuestions = questions.sort(() => 0.5 - Math.random())
     const selectedQuestions = shuffledQuestions.splice(0, 5);
 
-    const totalScore = questions.reduce((p, c) => p + getScore(c.difficulty), 0)
+    const totalScore = selectedQuestions.reduce((p, c) => p + getScore(c.difficulty), 0)
     const result = await prisma.result.create({
         data: {
             userId: params.userId,
