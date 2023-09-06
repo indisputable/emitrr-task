@@ -20,6 +20,8 @@ Original Github Accout: https://github.com/tnmyk
 
 
 ## Features
+- Mobile Responsive (bonus) 
+
 - Users can register using their emails.
 - Users can take quizes for specific languages.
 - The question will be selected according to user's level. If user's level is high, the user will get harder questions.
@@ -27,10 +29,11 @@ Original Github Accout: https://github.com/tnmyk
 - Users can see their score cards and review correct/incorrect answers.
 - Users can see all their previous submissions on their profile page.
 - Users can reset their progress from their profile page.
-- Users can view global leaderboard. The ranking will be based on who has score more points.
-- Users can also see language-specific and quiz-specific leaderboard.
 
-#### Admins
+- Users can view global leaderboard. The ranking will be based on who has score more points. (bonus)
+- Users can also see language-specific and quiz-specific leaderboard. (bonus)
+
+#### Admins (Bonus: Dynamic Content Updates)
 - Admins can add quizes.
 - Admins can add languages.
 - Admins can add questions for selected languages.
