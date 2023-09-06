@@ -1,10 +1,11 @@
 Remaining: 
 - [x] Language Leaderboard
-- [ ] Increment user level
+- [x] Increment user level
 - [ ] Profile page
+- [ ] Deploy
 - [ ] CMS for questions 
 - [ ] Add comments to code
-
+- [ ] Use ShadCN's badge
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
 ## Getting Started

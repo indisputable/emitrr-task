@@ -1,12 +1,16 @@
 import prisma from '@/lib/prisma'
 import Dashboard from "./dashboard";
+import { getServerSession } from 'next-auth';
+import { authOptions } from '@/lib/auth';
 
 export default async function QuizesPage() {
+    const session = await getServerSession(authOptions)
+
     const quizes = await prisma.quiz.findMany({
         include: {
             results: {
                 where: {
-                    userId: 1
+                    userId: session?.user.id
                 }
             },
             language: true

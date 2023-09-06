@@ -1,12 +1,4 @@
 "use client"
-import {
-    Card,
-    CardContent,
-    CardDescription,
-    CardFooter,
-    CardHeader,
-    CardTitle,
-} from "@/components/ui/card"
 import { Button } from '@/components/ui/button'
 import Link from 'next/link'
 import {
@@ -53,7 +45,7 @@ export default function RegisterPage() {
 
         if (res.ok) {
             // success
-            signIn('credentials', { redirect: false, ...values})
+            signIn('credentials', { redirect: false, ...values })
         }
     }
     return (

@@ -3,8 +3,8 @@ import './globals.css'
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
 import Provider from '@/context/auth-context'
-import { authOptions } from "@/app/api/auth/[...nextauth]/route"
 import { getServerSession } from 'next-auth'
+import { authOptions } from '@/lib/auth'
 const inter = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {

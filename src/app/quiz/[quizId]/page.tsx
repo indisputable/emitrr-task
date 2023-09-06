@@ -2,9 +2,12 @@ import { redirect } from 'next/navigation'
 import QuizForm from "./form";
 import { getQuiz } from '@/lib/quiz';
 import { Card, CardDescription, CardTitle } from '@/components/ui/card';
+import { getServerSession } from 'next-auth';
+import { authOptions } from '@/lib/auth';
 
 export default async function QuizPage({ params }: { params: { quizId: string } }) {
-    const quiz = await getQuiz({ quizId: parseInt(params.quizId), userId: 1 });
+    const session = await getServerSession(authOptions);
+    const quiz = await getQuiz({ quizId: parseInt(params.quizId), userId: session?.user.id });
     const result = quiz?.result?.markedOptions?.length! > 0 ? quiz.result : false;
     if (!quiz) return redirect('/quiz')
     if (!result) {
