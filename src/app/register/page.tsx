@@ -15,7 +15,6 @@ import * as z from "zod"
 import { useForm } from "react-hook-form"
 import { signIn } from "next-auth/react"
 import { useToast } from '@/components/ui/use-toast'
-import { useRouter } from 'next/navigation'
 
 const formSchema = z.object({
     email: z.string().min(2, {
@@ -58,10 +57,10 @@ export default function RegisterPage() {
         }
     }
     return (
-        <main className="flex flex-col items-center justify-between px-24 py-12">
+        <main className="flex flex-col items-center justify-between px-3 sm:px-24 py-10 sm:py-12">
             <h1 className='text-center text-3xl font-bold'>Register</h1>
-            <h2 className='mt-5'>Improve language proficiency, for beginners and even experienced</h2>
-            <div className='mt-7 w-1/3 p-8 border rounded'>
+            <h2 className='mt-5 text-center'>Improve language proficiency, for beginners and even experienced</h2>
+            <div className='mt-7 md:w-1/3 p-8 border rounded'>
                 <Form {...form}>
                     <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4 w-full">
                         <FormField

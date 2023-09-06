@@ -10,7 +10,7 @@ const Nav = () => {
             <Link href="/" className="font-bold text-xl">
                 LangLearn
             </Link>
-            <div className="flex gap-x-8 text-sm font-semibold">
+            <div className="hidden sm:flex gap-x-8 text-sm font-semibold">
                 <Link href="/leaderboard/language/all">Leaderboard</Link>
                 <Link href="/quiz">Explore quizes</Link>
                 {!session?.user && <Link href="/register">Register</Link>}

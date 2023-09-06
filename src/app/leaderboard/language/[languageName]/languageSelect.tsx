@@ -11,7 +11,7 @@ import { useRouter } from "next/navigation"
 export default function SelectLanguage({ languages, currentLanguage }: { languages: { id: number, name: string }[], currentLanguage: string }) {
     const router = useRouter()
     return <div className="flex gap-x-4 items-center mt-4">
-        <span>Go to langage specific leaderboard</span>
+        <span className="text-sm">Go to langage specific leaderboard</span>
         <Select defaultValue={currentLanguage} onValueChange={(v) => {
             router.push(v)
         }}>

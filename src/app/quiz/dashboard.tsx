@@ -24,22 +24,21 @@ import { Badge } from "@/components/ui/badge"
 export default function Dashboard({ languages, quizes }: { languages: Language[], quizes: any[] }) {
     const [languageId, setLanguageId] = useState<number>(-1)
     return <div className="mt-8">
-        <div className="flex gap-x-4 items-center">
-            <span>Select Language</span>
+        <div className="w-full flex gap-x-4 justify-center items-center">
+            <span className="text-sm">Select Language</span>
             <Select onValueChange={(v) => setLanguageId(parseInt(v))}>
-                <SelectTrigger className="w-[180px]">
+                <SelectTrigger className="w-1/3 sm:w-[180px]">
                     <SelectValue placeholder="Language" />
                 </SelectTrigger>
                 <SelectContent><SelectItem value={"-1"}>All</SelectItem>
                     {languages.map(lang => {
                         return <SelectItem key={`lang-select-item-${lang.id}`} value={lang.id.toString()}>{lang.name}</SelectItem>
                     })}
-
                 </SelectContent>
             </Select>
         </div>
-        <div className='mt-6 flex gap-5 flex-wrap'>
-            {quizes.filter(q => languageId === -1 || q.language.id === languageId).map((quiz) => <Card key={`quiz-${quiz.id}`} className='min-w-[350px]'>
+        <div className='mt-6 flex gap-5 flex-wrap items-center justify-center'>
+            {quizes.filter(q => languageId === -1 || q.language.id === languageId).map((quiz) => <Card key={`quiz-${quiz.id}`} className='sm:min-w-[350px]'>
                 <CardHeader className=''>
                     <CardTitle>{quiz.name}</CardTitle>
                     <CardDescription>{quiz.description}<br />

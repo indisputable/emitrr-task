@@ -44,15 +44,15 @@ export default async function ProfilePage({ params }: { params: { userId: string
         return NextResponse.redirect('/')
     }
 
-    return <main className="flex flex-col items-center justify-between px-24 py-20">
-        <h1 className="text-2xl">Welcome to <span className="font-bold">{user.name}</span>&apos;s profile!</h1>
+    return <main className="flex flex-col items-center justify-between px-3 sm:px-24 py-10 sm:py-20">
+        <h1 className="text-center text-2xl">Welcome to <span className="font-bold">{user.name}</span>&apos;s profile!</h1>
         <div className="w-2/12 mt-6 rounded-full overflow-hidden">
             <img src={`https://api.dicebear.com/7.x/initials/svg?seed=${user.name}`} height={'100%'} width={'100%'} />
         </div>
         <h3 className="mt-3">User level: {user.level}</h3>
         <div className="mt-10 flex flex-col items-center">
             <h3 className="font-semibold">Quizes taken</h3>
-            <Table className="mt-2">
+            <Table className="mt-2 w-full text-xs sm:text-base">
                 <TableCaption>List of your recent quizes taken.</TableCaption>
                 <TableHeader>
                     <TableRow>

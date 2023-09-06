@@ -24,9 +24,9 @@ export default async function QuizesPage() {
     ]);
 
     return (
-        <main className="flex flex-col items-center justify-between px-24">
+        <main className="flex flex-col items-center justify-between px-3 sm:px-24">
             <h1 className="mt-3 text-center text-4xl font-bold">Take Quizes</h1>
-            <h2 className="mt-5 text-lg">
+            <h2 className="mt-5 text-center sm:text-lg">
                 Explore set of available quizes to improve language proficiency
             </h2>
             <Dashboard languages={languages} quizes={quizes} />

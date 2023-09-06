@@ -49,7 +49,7 @@ export default function QuizForm({ quiz }: { quiz: Quiz }) {
         }
     }
 
-    return <div className='mt-10 flex gap-5 flex-wrap w-1/2'>
+    return <div className='mt-10 flex gap-5 flex-wrap sm:w-1/2'>
         <Form {...form} >
             <form onSubmit={form.handleSubmit(onSubmit)} className="w-full space-y-6 flex flex-col">
                 {quiz?.result?.questions.map((question, questionIndex) => {
