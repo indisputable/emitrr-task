@@ -22,7 +22,7 @@ export default async function QuizLeaderboardPage({ params }: { params: { quizId
         }
     })
 
-    const tableResults = results.sort((a, b) => a.score! - b.score!).map((r, ri) => ({ rank: ri + 1, id: r.id, score: r.score ?? 0, user: r.user.name }))
+    const tableResults = results.sort((a, b) => b.score! - a.score!).map((r, ri) => ({ rank: ri + 1, id: r.id, score: r.score ?? 0, user: r.user.name }))
     return (
         <main className="flex flex-col items-center justify-between px-24 py-20">
             <h1 className='text-center text-3xl font-bold'>Leaderboard for {quiz?.name}</h1>

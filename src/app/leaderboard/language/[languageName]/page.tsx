@@ -42,7 +42,7 @@ export default async function LanguageLeaderboardPage({ params }: { params: { la
     })
     users.forEach(user => userIdNameMap.set(user.id, user.name))
     const groupWithUser = group.map(g => ({ ...g, username: userIdNameMap.get(g.userId) }))
-    const tableResults = groupWithUser.sort((a, b) => a._sum.score! - b._sum.score!).map((r, ri) => ({ rank: ri + 1, totalscore: r._sum?.score ?? 0, username: r.username! }))
+    const tableResults = groupWithUser.sort((a, b) => b._sum.score! - a._sum.score!).map((r, ri) => ({ rank: ri + 1, totalscore: r._sum?.score ?? 0, username: r.username! }))
 
     return (
         <main className="flex flex-col items-center justify-between px-24 py-20">
