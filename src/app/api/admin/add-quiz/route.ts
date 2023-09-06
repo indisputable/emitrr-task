@@ -2,7 +2,7 @@ import prisma from "@/lib/prisma"
 import { NextResponse, NextRequest } from "next/server"
 
 export const POST = async (req: NextRequest) => {
-    let { quizName, languageId: languageIdStr, description }: { quizName: string, languageIdStr: string, description: string } = await req.json()
+    let { quizName, languageId: languageIdStr, description }: { quizName: string, languageId: string, description: string } = await req.json()
     quizName = quizName.trim();
     const languageId = parseInt(languageIdStr);
 
@@ -11,7 +11,7 @@ export const POST = async (req: NextRequest) => {
     await prisma.quiz.create({
         data: {
             name: quizName.charAt(0).toUpperCase() + quizName.slice(1),
-            languageId,description
+            languageId, description
         }
     })
 
