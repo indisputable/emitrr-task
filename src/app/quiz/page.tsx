@@ -12,7 +12,7 @@ export default async function QuizesPage() {
                 where: {
                     userId: session?.user.id
                 }
-                , include:{
+                , include: {
                     markedOptions: true
                 }
             },

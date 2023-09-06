@@ -23,7 +23,7 @@ const redirectIfLoggedIn = ['/register']
 
 export const middleware = async (req: NextRequest) => {
     const token = await getToken({ req })
-    if(req.nextUrl.pathname.startsWith('/admin')){
+    if (req.nextUrl.pathname.startsWith('/admin')) {
 
     }
     if (!token && req.nextUrl.pathname !== '/register') return NextResponse.redirect(`${req.nextUrl.origin}/register`)

@@ -38,7 +38,17 @@ export const getQuiz = async (params: getQuizParams) => {
         return { ...quiz, result: quiz?.results[0] };
     }
 
-    const questions: Question[] = await prisma.$queryRawUnsafe(`SELECT * FROM "Question" WHERE languageId = ${quiz?.languageId} AND difficulty <= ${user.level} ORDER BY RANDOM() LIMIT 5`)
+    const questions = await prisma.question.findMany({
+        where: {
+            languageId: quiz?.languageId,
+            difficulty: {
+                lte: user?.level
+            }
+        }
+    })
+    const shuffledQuestions = questions.sort(() => 0.5 - Math.random())
+    const selectedQuestions = shuffledQuestions.splice(0, 5);
+
     const totalScore = questions.reduce((p, c) => p + getScore(c.difficulty), 0)
     const result = await prisma.result.create({
         data: {
@@ -46,7 +56,7 @@ export const getQuiz = async (params: getQuizParams) => {
             quizId: params.quizId,
             totalScore,
             questions: {
-                connect: questions.map(q => ({ id: q.id }))
+                connect: selectedQuestions.map(q => ({ id: q.id }))
             }
         },
         include: {

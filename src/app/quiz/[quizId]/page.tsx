@@ -25,7 +25,6 @@ export default async function QuizPage({ params }: { params: { quizId: string } 
             <h1 className='mt-3 text-center text-4xl font-bold'>{result ? "View Result" : "Take Quiz"}: {quiz?.name}</h1>
             <h2 className='mt-5 text-lg'>{quiz.description}</h2>
             {result && <>
-
                 <h3 className='mt-8 font-bold'>Your result is here!</h3>
                 <Card className='w-1/2 mt-6 flex flex-col items-center p-5'>
                     <CardTitle>Congratulations!</CardTitle>

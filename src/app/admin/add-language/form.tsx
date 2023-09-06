@@ -46,7 +46,7 @@ export default function AddLanguageForm() {
             router.push('/admin')
         }
         else {
-        const resj = await res.json();
+            const resj = await res.json();
             toast({
                 title: resj.message,
                 variant: "destructive"

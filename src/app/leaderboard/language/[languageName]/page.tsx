@@ -10,8 +10,8 @@ export default async function LanguageLeaderboardPage({ params }: { params: { la
     const group = await prisma.result.groupBy({
         by: ['userId'],
         where: params.languageName === 'all' ? {
-            markedOptions:{
-                some:{}
+            markedOptions: {
+                some: {}
             }
         } : {
             quiz: {

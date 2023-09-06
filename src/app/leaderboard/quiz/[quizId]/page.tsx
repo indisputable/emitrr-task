@@ -13,8 +13,8 @@ export default async function QuizLeaderboardPage({ params }: { params: { quizId
     const results = await prisma.result.findMany({
         where: {
             quizId: parseInt(params.quizId),
-            markedOptions:{
-                some:{}
+            markedOptions: {
+                some: {}
             }
         },
         include: {

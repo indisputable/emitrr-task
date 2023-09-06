@@ -55,7 +55,6 @@ export default function RegisterPage() {
                 description: "Begin your quizes.",
             })
             signIn('credentials', { redirect: true, ...values })
-
         }
     }
     return (
