@@ -32,7 +32,7 @@ export default function Dashboard({ languages, quizes }: { languages: Language[]
                 </SelectTrigger>
                 <SelectContent><SelectItem value={"-1"}>All</SelectItem>
                     {languages.map(lang => {
-                        return <SelectItem value={lang.id.toString()}>{lang.name}</SelectItem>
+                        return <SelectItem key={`lang-select-item-${lang.id}`} value={lang.id.toString()}>{lang.name}</SelectItem>
                     })}
 
                 </SelectContent>

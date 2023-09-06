@@ -64,7 +64,7 @@ export default async function ProfilePage({ params }: { params: { userId: string
                     </TableRow>
                 </TableHeader>
                 <TableBody>
-                    {user.results.map(result => <TableRow>
+                    {user.results.map(result => <TableRow key={`table-row-${result.id}`}>
                         <TableCell className="font-medium">{result.quiz.name}</TableCell>
                         <TableCell>{result.quiz.language.name}</TableCell>
                         <TableCell>{result.totalScore}</TableCell>
