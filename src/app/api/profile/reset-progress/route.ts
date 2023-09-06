@@ -4,19 +4,28 @@ import { getServerSession } from "next-auth";
 import { NextResponse } from "next/server";
 
 export async function DELETE() {
-    const session = await getServerSession(authOptions);
+    try {
+        const session = await getServerSession(authOptions);
 
-    if (!session?.user) {
+        if (!session?.user) {
+            return NextResponse.json({
+                success: false,
+                message: "User not logged in."
+            })
+        }
+
+        await prisma.result.deleteMany({
+            where: {
+                userId: session?.user.id
+            }
+        })
+        return NextResponse.json({});
+    } catch (err) {
         return NextResponse.json({
             success: false,
-            message: "User not logged in."
+            message: "Error occurred."
+        }, {
+            status: 500
         })
     }
-
-    await prisma.result.deleteMany({
-        where: {
-            userId: session?.user.id
-        }
-    })
-    return NextResponse.json({});
 }
