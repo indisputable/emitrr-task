@@ -44,7 +44,7 @@ export async function POST(request: NextRequest, context: any) {
         }
     })
     const score = result?.markedOptions.reduce((p, c) => p + (c.correct ? getScore(c.question.difficulty) : 0), 0)
-    const level = Math.ceil(1 + (score / result.totalScore) * 5);
+    const level = Math.ceil(1 + (score / result.totalScore) * 5) ?? 1;
     await prisma.result.update({
         where: { id: result!.id }, data: {
             score: score
