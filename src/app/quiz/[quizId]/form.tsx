@@ -1,17 +1,8 @@
 "use client"
 import { Button } from "@/components/ui/button";
-import {
-    Card,
-    CardContent,
-    CardDescription,
-    CardFooter,
-    CardHeader,
-    CardTitle,
-} from "@/components/ui/card"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 import * as z from "zod"
-import { Label } from "@/components/ui/label"
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
 import { Quiz, getScore } from "@/lib/quiz";
 import {
@@ -23,23 +14,39 @@ import {
     FormMessage,
 } from "@/components/ui/form"
 import { useEffect } from "react";
-
+import { useRouter } from "next/navigation";
+import { useToast } from "@/components/ui/use-toast";
 
 const formObj: any = {}
 export default function QuizForm({ quiz }: { quiz: Quiz }) {
+    const router = useRouter();
+
     useEffect(() => {
         quiz.result?.questions.forEach(q => {
             formObj[q.id.toString()] = z.enum(q.options.map(op => op.id.toString()))
         })
     }, [quiz])
+
     const FormSchema = z.object(formObj)
     const form = useForm<z.infer<typeof FormSchema>>({
         resolver: zodResolver(FormSchema),
     })
 
+    const { toast } = useToast()
     async function onSubmit(data: z.infer<typeof FormSchema>) {
+        toast({
+            title: "⏰ Submitting",
+            description: "Saving your response.",
+        })
         const res = await fetch(`/api/quiz/submit/${quiz?.id}`, { method: "POST", body: JSON.stringify(data) })
-        const resj = await res.json()
+
+        if (res.ok) {
+            router.refresh();
+            toast({
+                title: "✅ Done",
+                description: "You can now view your score",
+            })
+        }
     }
 
     return <div className='mt-10 flex gap-5 flex-wrap w-1/2'>
@@ -77,7 +84,7 @@ export default function QuizForm({ quiz }: { quiz: Quiz }) {
                         )}
                     />
                 })}
-               {quiz.result?.markedOptions.length === 0 &&  <Button className="w-1/2 mx-auto" type="submit">Submit</Button>}
+                {quiz.result?.markedOptions.length === 0 && <Button className="w-1/2 mx-auto" type="submit">Submit</Button>}
             </form>
         </Form>
     </div>

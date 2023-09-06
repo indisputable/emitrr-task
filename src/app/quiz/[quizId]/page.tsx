@@ -24,11 +24,13 @@ export default async function QuizPage({ params }: { params: { quizId: string } 
         <main className="flex flex-col items-center justify-between px-24">
             <h1 className='mt-3 text-center text-4xl font-bold'>{result ? "View Result" : "Take Quiz"}: {quiz?.name}</h1>
             <h2 className='mt-5 text-lg'>{quiz.description}</h2>
-            {result && <><Card className='w-1/2 mt-6 flex flex-col items-center p-5'>
-                <CardTitle>Congratulations!</CardTitle>
-                <CardDescription className='mt-1'>You scored  {result.score} out of {result.totalScore} points!</CardDescription>
-            </Card>
-                <h3 className='mt-8'>Your submission details!</h3>
+            {result && <>
+
+                <h3 className='mt-8 font-bold'>Your result is here!</h3>
+                <Card className='w-1/2 mt-6 flex flex-col items-center p-5'>
+                    <CardTitle>Congratulations!</CardTitle>
+                    <CardDescription className='mt-1'>You scored  {result.score} out of {result.totalScore} points!</CardDescription>
+                </Card>
             </>}
             <QuizForm quiz={quiz} />
         </main>

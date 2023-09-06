@@ -12,9 +12,12 @@ import {
 } from "@/components/ui/table"
 import { Settings } from "./settings";
 
+// Dynamic page
+export const dynamic = 'force-dynamic'
+export const revalidate = 1
+
 export default async function ProfilePage({ params }: { params: { userId: string } }) {
     const userId = parseInt(params.userId);
-
     const user = await prisma.user.findUnique({
         where: {
             id: userId
@@ -26,6 +29,11 @@ export default async function ProfilePage({ params }: { params: { userId: string
                         include: {
                             language: true
                         }
+                    }
+                },
+                where: {
+                    markedOptions: {
+                        some: {}
                     }
                 }
             }

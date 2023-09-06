@@ -12,15 +12,32 @@ import {
     AlertDialogTrigger,
 } from "@/components/ui/alert-dialog"
 import { Button } from "@/components/ui/button"
+import { useToast } from "@/components/ui/use-toast"
+import { useRouter } from "next/navigation"
 
 export default function DeleteProgress() {
+    const router = useRouter()
+
+    const { toast } = useToast();
+
     const handleDeleteProgress = async () => {
+        toast({
+            title: "⏰ Deleting your progress",
+            description: "Removing your results from our servers",
+        })
+
         const res = await fetch('/api/profile/reset-progress', {
             method: 'DELETE'
         })
 
         if (res.ok) {
+            toast({
+                title: "✅ Removed your results",
+                description: "You can now start from scratch.",
+            })
+
             // Success
+            router.refresh()
         }
     }
 
@@ -38,7 +55,9 @@ export default function DeleteProgress() {
                 </AlertDialogHeader>
                 <AlertDialogFooter>
                     <AlertDialogCancel>Cancel</AlertDialogCancel>
-                    <AlertDialogAction onClick={handleDeleteProgress}>Continue</AlertDialogAction>
+                    <AlertDialogAction onClick={handleDeleteProgress} className="bg-red-600 hover:bg-red-700">
+                        Continue
+                    </AlertDialogAction>
                 </AlertDialogFooter>
             </AlertDialogContent>
         </AlertDialog>

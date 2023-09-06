@@ -12,6 +12,9 @@ export default async function QuizesPage() {
                 where: {
                     userId: session?.user.id
                 }
+                , include:{
+                    markedOptions: true
+                }
             },
             language: true
         }

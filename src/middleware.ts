@@ -29,5 +29,5 @@ export const middleware = async (req: NextRequest) => {
     if (token && redirectIfLoggedIn.includes(req.nextUrl.pathname)) return NextResponse.redirect(req.nextUrl.origin)
 }
 export const config = {
-    matcher: ['/register', '/quiz/:path'],
+    matcher: ['/register', '/quiz/:path*'],
 };

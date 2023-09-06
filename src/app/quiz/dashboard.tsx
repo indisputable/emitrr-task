@@ -17,12 +17,15 @@ import {
     SelectValue,
 } from "@/components/ui/select"
 import { useState } from "react";
+import { Language, Quiz } from "@prisma/client";
+import { Badge } from "@/components/ui/badge"
 
 
-export default function Dashboard({ languages, quizes }: { languages: any, quizes: any }) {
+export default function Dashboard({ languages, quizes }: { languages: Language[], quizes: any[] }) {
     const [languageId, setLanguageId] = useState<number>(-1)
     return <div className="mt-8">
-        <div className="flex gap-x-4 items-center"><span>Add Language filter</span>
+        <div className="flex gap-x-4 items-center">
+            <span>Select Language</span>
             <Select onValueChange={(v) => setLanguageId(parseInt(v))}>
                 <SelectTrigger className="w-[180px]">
                     <SelectValue placeholder="Language" />
@@ -36,16 +39,18 @@ export default function Dashboard({ languages, quizes }: { languages: any, quize
             </Select>
         </div>
         <div className='mt-6 flex gap-5 flex-wrap'>
-            {quizes.filter(q => languageId === -1 || q.language.id === languageId).map((quiz) => <Card key={quiz.id} className='min-w-[350px]'>
+            {quizes.filter(q => languageId === -1 || q.language.id === languageId).map((quiz) => <Card key={`quiz-${quiz.id}`} className='min-w-[350px]'>
                 <CardHeader className=''>
                     <CardTitle>{quiz.name}</CardTitle>
-                    <CardDescription>{quiz.description}<br />Language: {quiz.language.name}</CardDescription>
+                    <CardDescription>{quiz.description}<br />
+                    </CardDescription>
+                    <Badge variant={'outline'} className="w-fit">Language: {quiz.language.name}</Badge>
                 </CardHeader>
                 <CardContent>
                 </CardContent>
                 <CardFooter className='flex gap-x-4'>
                     <Button>
-                        <Link href={`/quiz/${quiz.id}`}>{quiz.results.length === 0 ? "Start Quiz" : "View Result"}</Link>
+                        <Link href={`/quiz/${quiz.id}`}>{(quiz.results.length === 0 || quiz.results[0]?.markedOptions.length === 0) ? "Start Quiz" : "View Result"}</Link>
                     </Button>
                     <Link href={`leaderboard/quiz/${quiz.id}`} className='text-sm underline'>View leaderboard</Link>
                 </CardFooter>

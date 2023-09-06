@@ -16,7 +16,7 @@ const Nav = () => {
                 {!session?.user && <Link href="/register">Register</Link>}
                 {session?.user && (
                     <>
-                        <Link href={`/profile/${session.user.id}`}>
+                        <Link href={`/profile/${session.user.id}`} prefetch={false} >
                             View profile
                         </Link>
                         <button

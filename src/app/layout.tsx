@@ -5,6 +5,7 @@ import { Inter } from 'next/font/google'
 import Provider from '@/context/auth-context'
 import { getServerSession } from 'next-auth'
 import { authOptions } from '@/lib/auth'
+import { Toaster } from "@/components/ui/toaster"
 const inter = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
@@ -23,7 +24,9 @@ export default async function RootLayout({
             <Provider session={session}>
                 <body className={`min-h-screen ${inter.className}`}>
                     <Nav />
-                    {children}</body>
+                    {children}
+                    <Toaster />
+                </body>
             </Provider>
         </html>
     )

@@ -1,6 +1,5 @@
 "use client"
 import { Button } from '@/components/ui/button'
-import Link from 'next/link'
 import {
     Form,
     FormControl,
@@ -15,6 +14,8 @@ import { zodResolver } from "@hookform/resolvers/zod"
 import * as z from "zod"
 import { useForm } from "react-hook-form"
 import { signIn } from "next-auth/react"
+import { useToast } from '@/components/ui/use-toast'
+import { useRouter } from 'next/navigation'
 
 const formSchema = z.object({
     email: z.string().min(2, {
@@ -32,20 +33,29 @@ export default function RegisterPage() {
     const form = useForm<z.infer<typeof formSchema>>({
         resolver: zodResolver(formSchema),
     })
+
+    const { toast } = useToast();
+
     async function onSubmit(values: z.infer<typeof formSchema>) {
         // Do something with the form values.
         // ✅ This will be type-safe and validated.
-
+        toast({
+            title: "⏰ Welcome",
+            description: "Creating your new account",
+        })
         const res = await fetch('/api/register', {
             method: 'POST',
             body: JSON.stringify(values)
         })
 
-        const resp = await res.json()
-
         if (res.ok) {
             // success
-            signIn('credentials', { redirect: false, ...values })
+            toast({
+                title: "✅ Signing you in.",
+                description: "Begin your quizes.",
+            })
+            signIn('credentials', { redirect: true, ...values })
+
         }
     }
     return (

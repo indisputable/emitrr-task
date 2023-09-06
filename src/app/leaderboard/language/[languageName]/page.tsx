@@ -3,28 +3,26 @@ import Link from 'next/link'
 import prisma from '@/lib/prisma'
 import { DataTable } from './data-table'
 import { columns } from './columns'
-import {
-    Select,
-    SelectContent,
-    SelectItem,
-    SelectTrigger,
-    SelectValue,
-} from "@/components/ui/select"
 import SelectLanguage from './languageSelect'
 
 export default async function LanguageLeaderboardPage({ params }: { params: { languageName: string } }) {
-    if (params.languageName === 'global') { }
-
     const languages = await prisma.language.findMany();
     const group = await prisma.result.groupBy({
         by: ['userId'],
-        where: params.languageName === 'all' ? {} : {
+        where: params.languageName === 'all' ? {
+            markedOptions:{
+                some:{}
+            }
+        } : {
             quiz: {
                 language: {
                     name: {
                         in: [params.languageName, params.languageName.charAt(0).toUpperCase() + params.languageName.slice(1)],
                     }
                 }
+            },
+            markedOptions: {
+                some: {}
             }
         },
         _sum: {
