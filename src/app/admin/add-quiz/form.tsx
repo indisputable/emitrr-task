@@ -56,7 +56,13 @@ export function AddQuizForm({ languages }: { languages: Language[] }) {
             })
             router.push('/admin')
         }
-        console.log(values);
+        else {
+            const resj = await res.json();
+            toast({
+                title: resj.message,
+                variant: "destructive"
+            })
+        }
     }
     return (
         <Card className="pt-5">

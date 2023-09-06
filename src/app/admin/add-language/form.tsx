@@ -38,15 +38,20 @@ export default function AddLanguageForm() {
             title: "⏰ Adding a new language"
         })
 
-        const res = await fetch('/api/admin/add-language', { method: "POST" , body: JSON.stringify(values)})
-
+        const res = await fetch('/api/admin/add-language', { method: "POST", body: JSON.stringify(values) })
         if (res.ok) {
             toast({
                 title: "✅ Successfully added a new language."
             })
             router.push('/admin')
         }
-        console.log(values);
+        else {
+        const resj = await res.json();
+            toast({
+                title: resj.message,
+                variant: "destructive"
+            })
+        }
     }
     return (
         <Card className="pt-5">

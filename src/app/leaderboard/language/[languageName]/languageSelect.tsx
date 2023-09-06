@@ -21,7 +21,7 @@ export default function SelectLanguage({ languages, currentLanguage }: { languag
             <SelectContent>
                 <SelectItem value={"all"}>All</SelectItem>
                 {languages.map(lang => {
-                    return <SelectItem value={lang.name.toLowerCase()}>{lang.name}</SelectItem>
+                    return <SelectItem key={`lang-select-item-${lang.id}`} value={lang.name.toLowerCase()}>{lang.name}</SelectItem>
                 })}
             </SelectContent>
         </Select>

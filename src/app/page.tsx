@@ -1,4 +1,3 @@
-import Image from 'next/image'
 import {
     Card,
     CardContent,
@@ -29,12 +28,6 @@ export default function Home() {
                         <CardTitle>{card.title}</CardTitle>
                         <CardDescription>{card.body}</CardDescription>
                     </CardHeader>
-                    { /** <CardContent>
-                        <p>Card Content</p>
-                    </CardContent>
-                    <CardFooter>
-                        <p>Card Footer</p>
-                    </CardFooter> **/}
                 </Card>)}
             </div>
             <div className='mt-7'>

@@ -59,6 +59,14 @@ export default function AddQuestionForm({ languages }: { languages: Language[] }
             })
             router.push('/admin')
         }
+        else {
+            const resj = await res.json();
+            toast({
+                title: resj.message,
+                variant: "destructive"
+            })
+        }
+
     }
     const [options, setOptions] = useState<string[]>([])
     return (

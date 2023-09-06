@@ -23,11 +23,14 @@ const redirectIfLoggedIn = ['/register']
 
 export const middleware = async (req: NextRequest) => {
     const token = await getToken({ req })
+    if(req.nextUrl.pathname.startsWith('/admin')){
+
+    }
     if (!token && req.nextUrl.pathname !== '/register') return NextResponse.redirect(`${req.nextUrl.origin}/register`)
 
     // User logged in
     if (token && redirectIfLoggedIn.includes(req.nextUrl.pathname)) return NextResponse.redirect(req.nextUrl.origin)
 }
 export const config = {
-    matcher: ['/register', '/quiz/:path*'],
+    matcher: ['/register', '/quiz/:path*', '/admin/:path*'],
 };

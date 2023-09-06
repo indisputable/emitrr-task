@@ -49,6 +49,7 @@ export default async function ProfilePage({ params }: { params: { userId: string
         <div className="w-2/12 mt-6 rounded-full overflow-hidden">
             <img src={`https://api.dicebear.com/7.x/initials/svg?seed=${user.name}`} height={'100%'} width={'100%'} />
         </div>
+        <h3 className="mt-3">User level: {user.level}</h3>
         <div className="mt-10 flex flex-col items-center">
             <h3 className="font-semibold">Quizes taken</h3>
             <Table className="mt-2">
